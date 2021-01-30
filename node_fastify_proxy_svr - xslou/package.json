@@ -1,0 +1,25 @@
+{
+  "name": "turningWheel-api",
+  "version": "1.0.0",
+  "description": "Turning wheels REST API with Node.js, MongoDB, Fastify and Swagger.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@types/busboy": "^0.2.3",
+    "boom": "^7.2.2",
+    "color-name": "*",
+    "colors": "*",
+    "express": "*",
+    "express-http-proxy": "*",
+    "fast-proxy": "^1.8.0",
+    "fastify": "^1.14.6",
+    "fastify-http-proxy": "^4.2.0",
+    "fastify-multipart": "^3.3.1",
+    "fastify-swagger": "^0.15.3",
+    "mongodb": "*",
+    "silly-datetime": "*"
+  }
+}
