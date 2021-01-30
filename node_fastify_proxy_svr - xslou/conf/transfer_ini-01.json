@@ -1,0 +1,8 @@
+{
+	"silence":false,
+	"serverPort":3000,
+	"serverRoute":"/",
+	"proxyHost":"34.94.77.170",
+	"proxyPort":8080,
+	"proxyRoute":"/PostImage/PostImage"
+}
