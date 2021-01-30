@@ -21,7 +21,10 @@ var imgsDir = iniResult[ "imgsDir" ] || "./imgsTemp/";					//
 var proxyHost = iniResult[ "proxyHost" ] || "127.0.0.1";				// 需要转发的目标服务器地址
 var proxyPort = iniResult[ "proxyPort" ] || '8000';						// 需要转发的目标服务器端口号
 var proxyRoute = iniResult[ "proxyRoute" ] || "/";						// 需要转发的目标服务器路径
+<<<<<<< HEAD
 // var _uufnIndex = 0;
+=======
+>>>>>>> main
 
 fs.mkdir( path.resolve( "./", imgsDir ), { recursive: true }, function( err ){		// 把 __dirname 修改为 "./"
 	if ( err ) throw err;
@@ -29,12 +32,19 @@ fs.mkdir( path.resolve( "./", imgsDir ), { recursive: true }, function( err ){		
 	funcs.printf( "Transfer http server start on " + " @" + colors.magenta( funcs.timeNow() ) );
 } );
 
+<<<<<<< HEAD
 var _uufnIndex = 0;
 // 获取唯一文件名函数
 function uufn(){
 	let _uufn = '';
 	if ( ++_uufnIndex > 10000 ) _uufnIndex = 0;
 	_uufn = _uufn + funcs.getTimestamp() + "-" + _uufnIndex;
+=======
+// 
+function uufn(){
+	let _uufn = '';
+	_uufn = _uufn + funcs.getTimestamp();
+>>>>>>> main
 	return _uufn;
 }
 
@@ -71,15 +81,22 @@ module.exports = async function ( fastify, options, next ) {
 		// 多文件处理 ====================================================================
 		// step. save files
 		const _datas = await req.parts();
+<<<<<<< HEAD
 		
+=======
+>>>>>>> main
 		for await ( const _data of _datas ) {
 			// if (_data.file) { funcs.printf( _data.file + " - " + _data.filename ); }
 			// else funcs.printf( _data.fieldname + " : " + _data.value );
 			if ( _data.file ) {
 				try {	// 尝试保存文件
+<<<<<<< HEAD
 					
 					// await pump( _data.file, fs.createWriteStream( path.resolve( "./", imgsDir ) + "/" + _data.filename ) );
 					await pump( _data.file, fs.createWriteStream( path.resolve( "./", imgsDir ) + "/" + uufn() + path.extname( _data.filename ) ) );
+=======
+					await pump( _data.file, fs.createWriteStream( path.resolve( "./", imgsDir ) + "/" +　_data.filename ) );
+>>>>>>> main
 				} catch ( error ) {
 					if ( error instanceof fastify.multipartErrors.FilesLimitError ) { }
 					throw( error );
