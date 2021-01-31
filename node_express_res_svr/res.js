@@ -57,36 +57,59 @@ app.post( serverRoute, function( req, res ){
 	form.uploadDir = path.resolve( __dirname, fileDir );	// 保存图片的目录，最后的 “/” 必须有; 此处增加 __dirname 是为了在任何地方运行本脚本，都可以找到正确对应的文件保存目录
 	form.keepExtensions = true;				// 保存图片时是否保留文件的扩展名
 	form.parse( req, function ( err, fields, files ) {
-		// var obj = {};
-		// Object.keys( fields ).forEach( function ( name ) {
-		// 	obj[ name ] = fields[ name ];
-		// });
+		var obj = {};
+		Object.keys( fields ).forEach( function ( name ) {
+			obj[ name ] = fields[ name ];
+			funcs.print('+++');
+		});
+		funcs.printf( Object.keys( req ) );
 		let _filesNum = Object.keys( files ).length;
+		// funcs.printf( _filesNum );
+		// funcs.printf( Object.keys( files.file ) );
 		if ( _filesNum > 0 ){		// 检测是否有 post 文件对象
 			let _resData = { "host":"cxl res svr", "method":"post", "files":[], "query":req.query };
 			let _filesIdx = 0;		// 处理多个文件对象时所需的临时索引值
+			let _files = [];
 			Object.keys( files ).forEach( function ( name ) {
 				if ( files[ name ] && files[ name ].name ) {
 					// obj[ name ] = files[ name ];
 					// ====================== 同步写法 ===================================
-					// funcs.print( colors.inverse( colors.cyan( ' 异步模式 > ' ) ) );
-					// fs.renameSync( files[ name ].path, form.uploadDir + files[ name ].name );
-					// res.write( "Post Res." );
-					// res.jsonp( req.query );
-					// res.end();
-					// ====================== 异步写法（通过回调函数）======================
-					fs.rename( files[ name ].path, form.uploadDir + "/" + files[ name ].name, function( err ){
-						if ( err ) throw err;
-						_resData[ "files" ].push( { "file":files[ name ].name } );
+					// funcs.print( colors.inverse( colors.cyan( ' 同步模式 > ' ) ) );
+					// funcs.printf( _filesIdx + '/' + _filesNum, files[ name ].name );
+					try {
+						fs.renameSync( files[ name ].path, form.uploadDir + "/" + files[ name ].name );
+						// _resData[ "files" ].push( { "file":files[ name ].name, "idx":_filesIdx } );
+						_files.push( { "file":files[ name ].name, "idx":_filesIdx } );
 						_filesIdx ++;
-						if ( _filesIdx >= _filesNum ){		// 判断是否已经处理完所有文件对象
-							res.type( 'application/json' );			// 可屏蔽？
-							res.jsonp( _resData );
-							res.end();								// 可屏蔽？
-						}
-					} );
+						funcs.printf( _filesIdx + '/' + _filesNum, files[ name ].name );
+					} catch( error ) {
+						throw( error );
+					}
+					
+					// funcs.printf( _filesIdx + '/' + _filesNum, files[ name ].name );
+					// if ( _filesIdx >= _filesNum ){		// 判断是否已经处理完所有文件对象
+					// 	res.type( 'application/json' );			// 可屏蔽？
+					// 	_resData[ "files" ] = _files;
+					// 	res.jsonp( _resData );
+					// 	res.end();								// 可屏蔽？
+					// }
+					
+					// ====================== 异步写法（通过回调函数）======================
+					// fs.rename( files[ name ].path, form.uploadDir + "/" + files[ name ].name, function( err ){
+					// 	if ( err ) throw err;
+					// 	_resData[ "files" ].push( { "file":files[ name ].name, "idx":_filesIdx } );
+					// 	_filesIdx ++;
+					// 	funcs.printf( _filesIdx, files[ name ].name );
+					// 	if ( _filesIdx >= _filesNum ){		// 判断是否已经处理完所有文件对象
+					// 		res.type( 'application/json' );			// 可屏蔽？
+					// 		res.jsonp( _resData );
+					// 		res.end();								// 可屏蔽？
+					// 	}
+					// } );
 				}
 			});
+			// _resData[ "files" ] = _files;
+			res.jsonp( _resData );
 		}
 		else{
 			res.jsonp( { "host":"cxl res svr", "method":"post", "file":[], "query":req.query } );

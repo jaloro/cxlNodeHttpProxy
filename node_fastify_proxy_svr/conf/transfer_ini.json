@@ -1,6 +1,5 @@
 {
 	"silence":false,
-	"serverPort":3000,
 	"serverRoute":"/",
 	"imgsDir":"./imgsTemp/",
 	"proxyHost":"localhost",
