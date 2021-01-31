@@ -1,6 +1,7 @@
 
 // 通用函数库 ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| //
 
+
 const COLORS = require( 'colors' );     // ■ 
 
 // 【 定义函数 】 - 测试函数 ===================================================================================================
@@ -15,7 +16,7 @@ function print( a_arg ) {
 	if( arguments.length < 1 ) return;
 	console.log( a_arg );
 }
-exports.print = print;
+module.exports.print = print;
 
 // 【 定义函数 】 - 格式化屏幕输出 =============================================================================================
 function printf() {
@@ -57,22 +58,22 @@ function printf() {
 		console.log( "-------" );
 	}
 }
-exports.printf = printf;	// 让函数可被作为模块函数被外界访问，等效于 // module.exports.printf = printf;
+module.exports.printf = printf;	// 让函数可被作为模块函数被外界访问，等效于 // module.exports.printf = printf;
 
 // 【 定义函数 】 - 判断数据类型 - 返回值为索引值：0-未知类型; 1-数字; 2-字符; 3-布尔; 4-未定义; 5-null; 6-数组; 7-对象 ============
 function typeofByIndex( a_arg ) { return ( typeof( a_arg ) == 'number' && 1 ) || ( typeof( a_arg ) == 'string' && 2 ) || ( typeof( a_arg ) == 'boolean' && 3 ) || ( typeof( a_arg ) == 'undefined' && 4 ) || ( a_arg == null && 5 ) || ( isArray() && 6 ) || ( typeof( a_arg ) == 'object' && 7 ) || 0; }
-exports.typeofByIndex = typeofByIndex;
+module.exports.typeofByIndex = typeofByIndex;
 
 // 【 定义函数 】 - 判断数据类型 - 返回值为数据类型名称 ==========================================================================
 function typeofByName( a_arg ) {
 	var _dataNames = [ "unknow", "number", "string", "boolean", "undefined", "null", "array", "object" ];
 	return _dataNames[ typeofByIndex( a_arg ) ];
 }
-exports.typeofByName = typeofByName;
+module.exports.typeofByName = typeofByName;
 
 // 【 定义函数 】 - 判断是否是数组类型 ==========================================================================================
 function isArray( a_arg ) { return Object.prototype.toString.call( a_arg ) === '[object Array]'; }
-exports.isArray = isArray;
+module.exports.isArray = isArray;
 
 // 【 定义函数 】 - 判断是否是JSON格式字符串 ====================================================================================
 function isJsonString( a_str ) {
@@ -82,7 +83,7 @@ function isJsonString( a_str ) {
 	} catch( _e ) {}
 	return false;
 }
-exports.isJsonString = isJsonString;
+module.exports.isJsonString = isJsonString;
 
 // 【 定义函数 】 - 判断是否是空对象 ============================================================================================
 function isEmptyObject( a_arg ) {
@@ -91,11 +92,11 @@ function isEmptyObject( a_arg ) {
 	}
 	return true;
 }
-exports.isEmptyObject = isEmptyObject;
+module.exports.isEmptyObject = isEmptyObject;
 
 // 【 定义函数 】 - 获取当前时间戳 ============================================================================================== 
 function getTimestamp() { return parseInt( Date.now() ); }
-exports.getTimestamp = getTimestamp;
+module.exports.getTimestamp = getTimestamp;
 
 // 【 定义函数 】 - 获取当前日期和时间的本地格式 =================================================================================
 //var TimeZone = { "Europe/London":0, 'Asia/Shanghai':8, 'America/New_York':-5 };	// 时区校准数组
@@ -104,7 +105,7 @@ function timeNow(){
 	//_date.setHours( _date.getHours() + TimeZone[ "Asia/Shanghai" ] );			// 时区校正 - 已经自动校正？
 	return _date.toLocaleString();
 }
-exports.timeNow = timeNow;
+module.exports.timeNow = timeNow;
 
 // 【 定义函数 】 - 获取随机数 ==================================================================================================
 function getRandom( a_range ){
@@ -120,7 +121,7 @@ function sortByJsonKey( key, sortType )
 		return ( _sorttype || sortType ) ? ~~( a[key] < b[key] ) : ~~( a[key] > b[key] );ssd
 	};
 }
-exports.sortByJsonKey = sortByJsonKey;
+module.exports.sortByJsonKey = sortByJsonKey;
 
 // 【 定义函数 】 - 对数字类型数组进行排序，用法：var a = _array.sort( sortByNumber( true ) ); =============================
 function sortByNumber( sortType )
@@ -130,13 +131,13 @@ function sortByNumber( sortType )
 		return _sorttype ? ~(b - a) : ~(a - b);
 	};
 }
-exports.sortByNumber = sortByNumber;
+module.exports.sortByNumber = sortByNumber;
 
 // 【 定义函数 】 - 判断单字符类型，返回值0到3依次是 0-特殊字符，1-数字，2-英文字母，3-汉字类型 ======================================
 function detectCharType( a_letter ) {
 	return ( !isNaN( a_letter ) && 1 ) || ( /[_a-zA-Z]/.test( a_letter ) && 2 ) || ( !/[^\u4E00-\u9FA5]/.test( a_letter ) && 3 ) || 0;
 }
-exports.detectCharType = detectCharType;
+module.exports.detectCharType = detectCharType;
 
 // 【 定义函数 】 - 返回汉字字符串的拼音首字母（大写） ============================================================================
 function getFirstLetter( str ) {
@@ -160,8 +161,7 @@ function getFirstLetter( str ) {
 		return result.join( '' );
 	}
 }
-exports.getFirstLetter = getFirstLetter;
-
+module.exports.getFirstLetter = getFirstLetter;
 
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- //

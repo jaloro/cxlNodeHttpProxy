@@ -12,19 +12,11 @@
     "boom": "^7.2.2",
     "color-name": "*",
     "colors": "*",
-    "express": "*",
-    "express-http-proxy": "*",
-    "fast-proxy": "^1.8.0",
     "fastify": "^3.11.0",
-    "fastify-formbody": "^5.0.0",
-    "fastify-http-proxy": "^4.2.0",
     "fastify-multipart": "^3.3.1",
-    "fastify-swagger": "^0.15.3",
-    "fluent-schema": "^1.1.0",
     "iconv-lite": "^0.6.2",
     "mongodb": "*",
     "myjs-common": "^1.0.6",
-    "request": "^2.88.2",
-    "silly-datetime": "*"
+    "request": "^2.88.2"
   }
 }
