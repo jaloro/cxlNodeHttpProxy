@@ -1,0 +1,6 @@
+# node 模块库
+node_modules/
+conf/
+imgsTemp/
+*.zip
+*.bak
