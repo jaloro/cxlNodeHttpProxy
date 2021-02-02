@@ -4,24 +4,12 @@ const colors = require('colors');
 // Require the framework and instantiate it
 const fastify = require('fastify')({
 	// trustProxy: true,
-	// logger: true
-})
-
-// Declare a route
-// fastify.post('/', async ( request, options, reply ) => {
-// 	funcs.print( colors.inverse( colors.cyan( " POST " ) ) + " req");
-// 	return { "version" : "0.0.1" }
-// })
-
-// Register plugins
-fastify.register(require('fastify-multipart'),{
-	addToBody:false			// 把 form-data 中的数据转移到 request 的 body 中；适合接收多个文件的情况
+	logger: false
 });
 
 // Register rountes
-// for tictactoe
-fastify.register(require('./routes/transfer.js'));
-// fastify.register(require('./routes/sessions.js'))
+fastify.register(require('./routes/resGet.js'));
+fastify.register(require('./routes/resPost.js'));
 
 // Run the server!
 // 同步写法
@@ -75,6 +63,3 @@ start();
 // 		headerPairs: 2000	// Max number of header key=>value pairs
 // 	}
 // });
-
-// 20210113061445-���G
-// 20210113061445-微信图片

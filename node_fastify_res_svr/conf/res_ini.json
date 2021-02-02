@@ -1,9 +1,5 @@
 {
 	"silence":false,
-	"serverPort":3000,
 	"serverRoute":"/",
-	"imgsDir":"./imgsTemp/",
-	"proxyHost":"localhost",
-	"proxyPort":8080,
-	"proxyRoute":"/PostImage/PostImage"
+	"imgsDir":"./imgsTemp/"
 }
