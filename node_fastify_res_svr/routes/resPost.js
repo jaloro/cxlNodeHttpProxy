@@ -5,8 +5,8 @@ const path = require('path');
 const fs = require("fs");						// ■ 加载 fs 模块
 const util = require("util");
 const { pipeline } = require('stream');
-const { stringify } = require('querystring');
 const pump = util.promisify(pipeline);
+// const { stringify } = require('querystring');
 
 var iniFileURL = 'conf/res_ini.json';	// 初始化文件路径
 var iniResult;							// 初始化文件加载结果对象
@@ -24,8 +24,7 @@ fs.mkdir( path.resolve( "./", imgsDir ), { recursive: true }, function( err ){		
 } );
 
 var _uufnIndex = 0;
-// 获取唯一文件名函数
-function uufn(){
+function uufn() {		// 函数 --- 创建唯一文件名
 	let _uufn = '';
 	if ( ++_uufnIndex > 10000 ) _uufnIndex = 0;
 	_uufn = _uufn + funcs.getTimestamp() + "-" + _uufnIndex;
@@ -33,35 +32,37 @@ function uufn(){
 }
 
 module.exports = async function ( fastify, options, next ) {		// async function proxy( fastify, options, next ) {
-	// [ POST ] ================================================================================================================================================
-	fastify.register(require('fastify-multipart'), {addToBody:false});				// 此句可被移到加载此代码的外部脚本处 by CXL
+	fastify.register(require('fastify-multipart', {addToBody:false}));				// 此句被移到了加载此代码的外部脚本处 by CXL
 	fastify.post( serverRoute, async ( req, reply ) => {
-		if( silence == false ){ funcs.print( colors.inverse( colors.cyan( " POST '/' " ) ) ); }
-		// req.log.info('some info');
+		if( silence == false ){ funcs.print( colors.inverse( colors.cyan( " POST '/' " ) ) ); }	// req.log.info('some info');
 		let _filePathName = '';
 		let _files = [];
 		let _values = {};
+		let _res = {};
 		const _datas = await req.parts();							// 多文件（或值对）处理 =====================================
 		try {		// 注：如果不用 try，当没有任何 form-data 参数传递时，会触发错误并自动返回一个 statusCode 为 406 的 json 值，程序不会 crash
 			for await ( const _data of _datas ) {
 				if ( _data.file ) {
 					try {	// 尝试保存文件
 						_filePathName = path.resolve( "./", imgsDir ) + "/" + uufn() + path.extname( _data.filename );
-						_files.push( _filePathName );
+						_files.push( _filePathName );				// 暂存文件参
 						await pump( _data.file, fs.createWriteStream( _filePathName ) );		// 保存文件
 					} catch ( error ) {
 						if ( error instanceof fastify.multipartErrors.FilesLimitError ) { }
 						throw( error );
 					}
 				} else {
-					// _values.push( { [ _data.fieldname ]:_data.value } );
-					_values[ _data.fieldname ] = _data.value;
+					_values[ _data.fieldname ] = _data.value;		// 暂存值对参
 				}
 			}
-			reply.send( { "statusCode":200, "version":"0.0.1", "method":"POST", "time":funcs.timeNow(), "files":_files, "values":_values, "query":req.query } );
+			_res = { "statusCode":200, "version":"0.0.1", "method":"POST", "time":funcs.timeNow(), "files":_files, "values":_values, "query":req.query };
+			if( silence == false ) funcs.print( _res );
+			reply.send( _res );
 		}
 		catch( error ){
-			reply.send( { "statusCode":406, "version":"0.0.1", "code":"FST_INVALID_MULTIPART_CONTENT_TYPE", "method":"POST", "time":funcs.timeNow(), "error":"Not Acceptable", "message": "the request is not multipart" } );
+			_res = { "statusCode":406, "version":"0.0.1", "code":"FST_INVALID_MULTIPART_CONTENT_TYPE", "method":"POST", "time":funcs.timeNow(), "error":"Not Acceptable", "message": "the request is not multipart" };
+			if( silence == false ) funcs.print( _res );
+			reply.send(  );
 		}
 	});
 }					// module.exports = proxy;

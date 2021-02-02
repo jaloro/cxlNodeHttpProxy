@@ -12,10 +12,12 @@ var silence = iniResult[ "silence" ] || false;							// 服务器终端静默模
 funcs.printf( "Receive 'GET' server on " + " @" + colors.magenta( funcs.timeNow() ) );
 
 module.exports = async function ( fastify, options, next ) {			// async function proxy( fastify, options, next ) {
-	// [ GET ] =================================================================================================================================================
 	fastify.get( '/', ( req, reply ) => {			// fastify.get( '/', async ( req, reply ) => {
-		if( silence == false ){ funcs.print( colors.inverse( colors.cyan( " GET '/' " ) ) ); }
-		reply.send( { "version":"0.0.1", query:req.query } );
+		if( silence == false ){
+			funcs.print( colors.inverse( colors.cyan( " GET '/' " ) ) );
+			funcs.print( { "statusCode":200, "version":"0.0.1", "method":"POST", "time":funcs.timeNow(), "query":req.query } );
+		}
+		reply.send( { "statusCode":200, "version":"0.0.1", "method":"POST", "time":funcs.timeNow(), "query":req.query } );
 	});
 	fastify.get( '/time', ( req, reply ) => {		// fastify.get( '/time', async ( req, reply ) => {
 		if( silence == false ){ funcs.print( colors.inverse( colors.cyan( " GET '/time' " ) ) + colors.magenta( " @" + funcs.timeNow( new Date() ) ) ); }
