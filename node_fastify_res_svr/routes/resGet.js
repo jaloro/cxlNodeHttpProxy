@@ -15,9 +15,9 @@ module.exports = async function ( fastify, options, next ) {			// async function
 	fastify.get( '/', ( req, reply ) => {			// fastify.get( '/', async ( req, reply ) => {
 		if( silence == false ){
 			funcs.print( colors.inverse( colors.cyan( " GET '/' " ) ) );
-			funcs.print( { "statusCode":200, "version":"0.0.1", "method":"POST", "time":funcs.timeNow(), "query":req.query } );
+			funcs.print( { "statusCode":200, "version":"0.0.1", "method":"GET", "time":funcs.timeNow(), "query":req.query } );
 		}
-		reply.send( { "statusCode":200, "version":"0.0.1", "method":"POST", "time":funcs.timeNow(), "query":req.query } );
+		reply.send( { "statusCode":200, "version":"0.0.1", "method":"GET", "time":funcs.timeNow(), "query":req.query } );
 	});
 	fastify.get( '/time', ( req, reply ) => {		// fastify.get( '/time', async ( req, reply ) => {
 		if( silence == false ){ funcs.print( colors.inverse( colors.cyan( " GET '/time' " ) ) + colors.magenta( " @" + funcs.timeNow( new Date() ) ) ); }
