@@ -55,7 +55,16 @@ module.exports = async function ( fastify, options, next ) {		// async function 
 					_values[ _data.fieldname ] = _data.value;		// 暂存值对参
 				}
 			}
-			_res = { "statusCode":200, "version":"0.0.1", "method":"POST", "time":funcs.timeNow(), "files":_files, "values":_values, "query":req.query };
+			// _res = { "statusCode":200, "version":"0.0.1", "method":"POST", "time":funcs.timeNow(), "files":_files, "values":_values, "query":req.query };
+			_res = {
+				"filename":"dog.jpg",
+				"objects":[
+					{"class_id":58,"confidence":32.5,"name":"people-face","relative_coordinates":{"center_x":0.130001,"center_y":0.682989,"width":0.140001,"height":0.180412}},
+					{"class_id":16,"confidence":97.9,"name":"dog","relative_coordinates":{"center_x":0.430001,"center_y":0.634021,"width":0.300001,"height":0.340206}},
+					{"class_id":1,"confidence":92.3,"name":"bicycle","relative_coordinates":{"center_x":0.960001,"center_y":0.335051,"width":0.080001,"height":0.283505}}
+				],
+				"frame_id":1
+			};
 			if( silence == false ) funcs.print( _res );
 			reply.send( _res );
 		}

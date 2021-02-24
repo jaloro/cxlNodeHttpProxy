@@ -13,6 +13,7 @@
     "color-name": "*",
     "colors": "*",
     "fastify": "^3.11.0",
+    "fastify-cors": "^5.2.0",
     "fastify-multipart": "^3.3.1",
     "iconv-lite": "^0.6.2",
     "mongodb": "*",

@@ -1,8 +1,10 @@
 {
 	"silence":false,
+	"showResponse":true,
 	"serverRoute":"/",
 	"imgsDir":"./imgsTemp/",
-	"proxyHost":"localhost",
-	"proxyPort":8080,
-	"proxyRoute":"/PostImage/PostImage"
+	"proxyHost":"192.168.3.220",
+	"proxyPort":8888,
+	"proxyRoute":"/PostImage/PostImage",
+	"corsOption":"*"
 }

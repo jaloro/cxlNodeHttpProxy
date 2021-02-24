@@ -15,7 +15,7 @@ fastify.register(require('./routes/resPost.js'));
 // 同步写法
 const start = async () => {
 	try {
-		await fastify.listen(process.env.PORT || 3000, '0.0.0.0');
+		await fastify.listen(process.env.PORT || 8888, '0.0.0.0');
 		fastify.log.info(`server listening on ${fastify.server.address().port}`);
 		funcs.print( 'Proxy Svr listening on ' + colors.yellow( fastify.server.address().port ) + colors.magenta( ' @' + funcs.timeNow() ) );
 	} catch (err) {
